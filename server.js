@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
 import { WebSocketServer } from 'ws';
+import cors from 'cors';                 // 1) tambah import cors
 
 const app = express();
 const server = http.createServer(app);
@@ -8,8 +9,9 @@ const wss = new WebSocketServer({ server });
 
 const PORT = process.env.PORT || 3000;
 
-// supaya bisa parse JSON
-app.use(express.json());
+// middleware
+app.use(cors());                        // 2) aktifkan CORS untuk semua route
+app.use(express.json());                // supaya bisa parse JSON
 
 // simpan client overlay yang konek via WebSocket
 const clients = new Set();
